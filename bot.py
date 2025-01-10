@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from telegram import Update, InputFile
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from PIL import Image, ImageDraw, ImageFont, ImageOps
