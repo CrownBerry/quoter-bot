@@ -30,7 +30,7 @@ async def quote(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Если сообщение содержит выделенную цитату (Quote & Reply), используем её
     quote_text = None
     if hasattr(received_message, "quote") and received_message.quote:
-        quote_text = received_message.quote
+        quote_text = received_message.quote.text
     elif reply.text and reply.text != "":
         quote_text = reply.text
     elif reply.caption and reply.caption != "":
