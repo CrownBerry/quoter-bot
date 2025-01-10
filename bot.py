@@ -141,10 +141,13 @@ def generate_quote_image(text, user_name, avatar_url):
 if __name__ == "__main__":
     # Создаем приложение
     app = ApplicationBuilder().token(BOT_TOKEN).build()
-    
+
     # Добавляем обработчик для команды /quote
     app.add_handler(CommandHandler("quote", quote))
-    
-    # Запускаем бота
-    print("Бот запущен!")
-    app.run_polling()
+
+    # Настраиваем Webhook
+    WEBHOOK_URL = "https://www.crownberry.link/quoter_bot"
+    app.run_webhook(listen="0.0.0.0",
+                    port=8443,  # Используйте безопасный порт
+                    url_path="quoter_bot",
+                    webhook_url=WEBHOOK_URL)
