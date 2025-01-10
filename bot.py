@@ -21,15 +21,16 @@ async def quote(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     # Извлекаем текст и данные о пользователе из реплая
-    reply = update.message.reply_to_message
+    received_message = update.message
+    reply = received_message.reply_to_message
 
     # Логирование reply для отладки
     print("LOGGING: reply_to_message:", reply)
 
     # Если сообщение содержит выделенную цитату (Quote & Reply), используем её
     quote_text = None
-    if hasattr(reply, "quote") and reply.quote:
-        quote_text = reply.quote
+    if hasattr(received_message, "quote") and received_message.quote:
+        quote_text = received_message.quote
     elif reply.text and reply.text != "":
         quote_text = reply.text
     elif reply.caption and reply.caption != "":
