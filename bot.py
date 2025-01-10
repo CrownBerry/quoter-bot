@@ -23,6 +23,9 @@ async def quote(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Извлекаем текст и данные о пользователе из реплая
     reply = update.message.reply_to_message
 
+    # Логирование reply для отладки
+    print("LOGGING: reply_to_message:", reply)
+
     # Если сообщение содержит выделенную цитату (Quote & Reply), используем её
     quote_text = None
     if reply.text and reply.text != "":
