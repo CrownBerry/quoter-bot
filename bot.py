@@ -22,19 +22,22 @@ async def quote(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Извлекаем текст и данные о пользователе из реплая
     reply = update.message.reply_to_message
+
+    # Если сообщение содержит выделенную цитату (Quote & Reply), используем её
+    quote_text = None
     if reply.text and reply.text != "":
         quote_text = reply.text
     elif reply.caption and reply.caption != "":
         quote_text = reply.caption
-    else:
-        await update.message.reply_text("Не удалось извлечь текст для цитаты.")
-        return
 
-    # Если сообщение содержит выделенную цитату (Quote & Reply), используем её
-    if update.message.text and update.message.text.startswith("/quote"):
-        quoted_message = update.message.text[len("/quote"):].strip()
+    if update.message.reply_to_message.text and update.message.reply_to_message.reply_markup and hasattr(update.message.reply_to_message.reply_markup, "quote"):
+        quoted_message = update.message.reply_to_message.reply_markup.quote
         if quoted_message:
             quote_text = quoted_message
+
+    if not quote_text:
+        await update.message.reply_text("Не удалось извлечь текст для цитаты.")
+        return
 
     user_name = reply.from_user.full_name or reply.from_user.username or "Без имени"
 
