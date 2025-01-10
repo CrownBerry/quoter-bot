@@ -28,15 +28,12 @@ async def quote(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Если сообщение содержит выделенную цитату (Quote & Reply), используем её
     quote_text = None
-    if reply.text and reply.text != "":
+    if hasattr(reply, "quote") and reply.quote:
+        quote_text = reply.quote
+    elif reply.text and reply.text != "":
         quote_text = reply.text
     elif reply.caption and reply.caption != "":
         quote_text = reply.caption
-
-    if update.message.reply_to_message.text and update.message.reply_to_message.reply_markup and hasattr(update.message.reply_to_message.reply_markup, "quote"):
-        quoted_message = update.message.reply_to_message.reply_markup.quote
-        if quoted_message:
-            quote_text = quoted_message
 
     if not quote_text:
         await update.message.reply_text("Не удалось извлечь текст для цитаты.")
